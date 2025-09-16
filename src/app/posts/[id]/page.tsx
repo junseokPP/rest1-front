@@ -16,7 +16,13 @@ export default function Home() {
   );
 
   useEffect(() => {
-    fetchApi(`/api/v1/posts/${postId}`).then(setPost);
+    fetchApi(`/api/v1/posts/${postId}`)
+      .then(setPost)
+      .catch((err) => {
+        alert(err);
+        router.replace("/posts");
+      });
+
     fetchApi(`/api/v1/posts/${postId}/comments`).then(setPostComments);
   }, []);
 
