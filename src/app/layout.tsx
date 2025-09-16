@@ -26,8 +26,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased  min-h-screen flex 
-        flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <header>
           <nav className="flex gap-4">
@@ -35,7 +34,7 @@ export default function RootLayout({
             <Link href="/posts">글 목록</Link>
           </nav>
         </header>
-        <main className="flex-1 flex justify-center items-center">
+        <main className="flex-1 flex flex-col justify-center items-center">
           {children}
         </main>
         <footer>푸터</footer>
