@@ -10,10 +10,12 @@ function PostCommentListItem({
   postComment,
   deletePostComment,
   postId,
+  onModifySuccess,
 }: {
   postComment: PostCommentDto;
   deletePostComment: (commentId: number) => void;
   postId: number;
+  onModifySuccess: (id: number, contentValue: string) => void;
 }) {
   const [modifyMode, setModifyMode] = useState(false);
 
@@ -33,6 +35,7 @@ function PostCommentListItem({
     }).then((data) => {
       alert(data.msg);
       toggleModifyMode();
+      onModifySuccess(postComment.id, contentValue);
     });
   };
 
@@ -112,6 +115,18 @@ export default function Home() {
     });
   };
 
+  const onModifySuccess = (id: number, contentValue: string) => {
+    if (postComments === null) return;
+
+    setPostComments(
+      postComments.map((postComment) =>
+        postComment.id === id
+          ? { ...postComment, content: contentValue }
+          : postComment
+      )
+    );
+  };
+
   if (post === null) {
     return <div>Loading...</div>;
   }
@@ -153,6 +168,7 @@ export default function Home() {
               postComment={postComment}
               deletePostComment={deletePostComment}
               postId={post.id}
+              onModifySuccess={onModifySuccess}
             />
           ))}
         </ul>
