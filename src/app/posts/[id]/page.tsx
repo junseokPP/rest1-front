@@ -11,7 +11,9 @@ export default function Home() {
   const router = useRouter();
 
   const [post, setPost] = useState<PostDto | null>(null);
-  const [postComments, setPostComments] = useState<PostCommentDto[]>([]);
+  const [postComments, setPostComments] = useState<PostCommentDto[] | null>(
+    null
+  );
 
   useEffect(() => {
     fetchApi(`/api/v1/posts/${id}`).then(setPost);
@@ -30,7 +32,6 @@ export default function Home() {
   if (post === null) {
     return <div>Loading...</div>;
   }
-
   return (
     <>
       <h1 className="p-2">글 상세 보기</h1>
@@ -56,10 +57,12 @@ export default function Home() {
       </div>
 
       <h2 className="p-2">댓글 목록</h2>
+      {postComments === null && <div>Loading...</div>}
+      {postComments !== null && postComments.length === 0 && (
+        <div>댓글이 없습니다.</div>
+      )}
 
-      {postComments.length === 0 && <div>댓글이 없습니다.</div>}
-
-      {postComments.length > 0 && (
+      {postComments !== null && postComments.length > 0 && (
         <ul>
           {postComments.map((postComment) => (
             <li key={postComment.id}>
