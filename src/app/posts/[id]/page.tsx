@@ -34,6 +34,13 @@ export default function Home() {
       method: "DELETE",
     }).then((data) => {
       alert(data.msg);
+
+      if (postComments === null) return;
+
+      // 리렌더링을 위한 댓글 배열 교체 필요
+      setPostComments(
+        postComments.filter((postComment) => postComment.id !== commentId)
+      );
     });
   };
 
