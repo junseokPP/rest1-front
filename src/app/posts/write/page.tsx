@@ -1,5 +1,7 @@
 "use client";
 
+import { fetchApi } from "@/lib/client";
+
 export default function Home() {
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -19,20 +21,15 @@ export default function Home() {
       contentText.focus();
     }
 
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/posts`, {
+    fetchApi(`/api/v1/posts`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         title: titleInput.value,
         content: contentText.value,
       }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert(data.msg);
-      });
+    }).then((data) => {
+      alert(data.msg);
+    });
   };
 
   return (
